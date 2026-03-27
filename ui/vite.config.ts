@@ -5,6 +5,9 @@ import babel from "@rolldown/plugin-babel";
 
 // https://vite.dev/config/
 export default defineConfig({
+  fmt: {
+    ignorePatterns: ["src/routeTree.gen.ts"],
+  },
   staged: {
     "*": "vp check --fix",
   },
