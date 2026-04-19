@@ -1,0 +1,57 @@
+@layer components {
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    min-height: 2.75rem;
+    padding-inline: var(--space-4);
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition:
+      background var(--transition-fast),
+      border-color var(--transition-fast),
+      color var(--transition-fast);
+  }
+
+  .button:hover {
+    background: var(--color-primary-hover);
+    color: var(--color-on-primary);
+  }
+
+  .button--secondary {
+    background: var(--color-surface);
+    color: var(--color-text);
+    border-color: var(--color-border);
+  }
+
+  .card {
+    padding: var(--space-5);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .site-header {
+    padding-block: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .hero {
+    padding-block: var(--space-8);
+  }
+
+  .hero__title {
+    margin-bottom: var(--space-4);
+  }
+
+  .hero__text {
+    color: var(--color-text-muted);
+    font-size: var(--text-lg);
+  }
+}
