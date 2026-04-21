@@ -10,11 +10,16 @@
     "preview": "vp preview"
   },
   "dependencies": {
+    "@tailwindcss/vite": "^4.2.2",
+    "@tanstack/react-router": "^1.168.23",
+    "@tanstack/react-router-devtools": "^1.166.13",
     "react": "^19.2.5",
-    "react-dom": "^19.2.5"
+    "react-dom": "^19.2.5",
+    "tailwindcss": "^4.2.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
+    "@tanstack/router-plugin": "^1.167.22",
     "@types/node": "^24.12.2",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
@@ -25,7 +30,7 @@
     "globals": "^17.5.0",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.58.2",
-    "vite": "npm:@voidzero-dev/vite-plus-core@latest",
+    "vite": "link:@tanstack/router-plugin/vite",
     "vite-plus": "latest"
   },
   "packageManager": "pnpm@10.33.0",
