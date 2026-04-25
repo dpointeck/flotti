@@ -17,13 +17,11 @@ data class HealthResponse(
 )
 
 fun Application.configureRouting() {
-    val postgresUrl = environment.config.property("postgres.url").getString()
-    val postgresUser = environment.config.property("postgres.user").getString()
-    val postgresPassword = environment.config.propertyOrNull("postgres.password")?.getString().orEmpty()
+    val postgresUrl = databaseUrlForJdbc(environment.config.property("postgres.url").getString())
 
     routing {
         get("/") {
-            val databaseConnected = checkDatabaseConnection(postgresUrl, postgresUser, postgresPassword)
+            val databaseConnected = checkDatabaseConnection(postgresUrl)
             if (databaseConnected) {
                 call.respond(
                     HttpStatusCode.OK,
@@ -39,10 +37,10 @@ fun Application.configureRouting() {
     }
 }
 
-private suspend fun checkDatabaseConnection(url: String, user: String, password: String): Boolean = withContext(Dispatchers.IO) {
+private suspend fun checkDatabaseConnection(url: String): Boolean = withContext(Dispatchers.IO) {
     runCatching {
         Class.forName("org.postgresql.Driver")
-        DriverManager.getConnection(url, user, password).use { connection ->
+        DriverManager.getConnection(url).use { connection ->
             connection.prepareStatement("SELECT 1").use { statement ->
                 statement.executeQuery().use { resultSet -> resultSet.next() }
             }

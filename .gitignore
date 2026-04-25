@@ -7,6 +7,9 @@ api/.kotlin/
 api/.idea/
 .idea/
 
+# Local env files
+api/.env
+
 # Local database files
 *.mv.db
 
