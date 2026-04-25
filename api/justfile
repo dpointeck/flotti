@@ -1,0 +1,4 @@
+set dotenv-load
+
+migrate:
+    @migrate -path database/migrations -database "$MIGRATE_DATABASE_URL" up
