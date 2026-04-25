@@ -7,4 +7,4 @@ ktor:
       - flotti.RoutingKt.configureRouting
 
 postgres:
-  url: "$DATABASE_URL"
+  url: "$DATABASE_URL:jdbc:postgresql://localhost:5432/flotti?user=postgres"

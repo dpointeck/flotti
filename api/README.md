@@ -33,19 +33,19 @@ To build or run the project, use one of the following tasks:
 Ktor resolves `postgres.url` in `src/main/resources/application.yaml` from a single `DATABASE_URL` environment variable, with this local default:
 
 ```text
-postgresql://postgres@localhost:5432/flotti
+jdbc:postgresql://localhost:5432/flotti?user=postgres
 ```
 
-`DATABASE_URL` can use the common Node-style Postgres URL format. For example, if your local Postgres is on port `5434` and uses `postgres` / `postgres`:
+`DATABASE_URL` uses the standard JDBC URL format. For example, if your local Postgres is on port `5434` and uses `postgres` / `postgres`:
 
 ```shell
-DATABASE_URL='postgresql://postgres:postgres@localhost:5434/flotti' ./gradlew run
+DATABASE_URL='jdbc:postgresql://localhost:5434/flotti?user=postgres&password=postgres' ./gradlew run
 ```
 
 For local development, you can also put this in `.env`:
 
 ```dotenv
-DATABASE_URL=postgresql://postgres:postgres@localhost:5434/flotti
+DATABASE_URL=jdbc:postgresql://localhost:5434/flotti?user=postgres&password=postgres
 ```
 
 Real environment variables take precedence over values in `.env`.
@@ -53,7 +53,7 @@ Real environment variables take precedence over values in `.env`.
 Integration tests use temporary databases on the same Postgres server configured by `DATABASE_URL`. You can run them inline:
 
 ```shell
-DATABASE_URL='postgresql://postgres:postgres@localhost:5434/flotti' ./gradlew test
+DATABASE_URL='jdbc:postgresql://localhost:5434/flotti?user=postgres&password=postgres' ./gradlew test
 ```
 
 Or use the same `.env` file and run:
@@ -62,7 +62,7 @@ Or use the same `.env` file and run:
 ./gradlew test
 ```
 
-The test database itself is still auto-generated as `flotti-test-{timestamp}` and dropped after the test run.
+The test database itself is still auto-generated as `flotti_test_{timestamp}` and dropped after the test run.
 
 If the server starts successfully, you'll see the following output:
 ```

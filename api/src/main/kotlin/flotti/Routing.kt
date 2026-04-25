@@ -5,10 +5,7 @@ import io.ktor.server.application.Application
 import io.ktor.server.response.respond
 import io.ktor.server.routing.get
 import io.ktor.server.routing.routing
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
-import java.sql.DriverManager
 
 @Serializable
 data class HealthResponse(
@@ -17,11 +14,11 @@ data class HealthResponse(
 )
 
 fun Application.configureRouting() {
-    val postgresUrl = databaseUrlForJdbc(environment.config.property("postgres.url").getString())
+    val database = connectDatabase(environment.config.property("postgres.url").getString())
 
     routing {
         get("/") {
-            val databaseConnected = checkDatabaseConnection(postgresUrl)
+            val databaseConnected = database.isConnected()
             if (databaseConnected) {
                 call.respond(
                     HttpStatusCode.OK,
@@ -37,13 +34,3 @@ fun Application.configureRouting() {
     }
 }
 
-private suspend fun checkDatabaseConnection(url: String): Boolean = withContext(Dispatchers.IO) {
-    runCatching {
-        Class.forName("org.postgresql.Driver")
-        DriverManager.getConnection(url).use { connection ->
-            connection.prepareStatement("SELECT 1").use { statement ->
-                statement.executeQuery().use { resultSet -> resultSet.next() }
-            }
-        }
-    }.getOrDefault(false)
-}
