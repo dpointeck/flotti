@@ -1,0 +1,14 @@
+# Build outputs
+api/build/
+api/.gradle/
+api/.kotlin/
+
+# IDE
+api/.idea/
+.idea/
+
+# Local database files
+*.mv.db
+
+# Archives
+*.zip
