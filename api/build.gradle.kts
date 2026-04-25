@@ -13,14 +13,6 @@ application {
 
 kotlin {
     jvmToolchain(21)
-    sourceSets {
-        main {
-            kotlin.srcDirs("src/main")
-        }
-        test {
-            kotlin.srcDirs("src/test")
-        }
-    }
 }
 
 dependencies {
