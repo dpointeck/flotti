@@ -11,19 +11,22 @@ import java.util.concurrent.TimeUnit
 private const val DEFAULT_DATABASE_URL = "jdbc:postgresql://localhost:5432/flotti?user=postgres"
 private const val MIGRATIONS_PATH = "database/migrations"
 
-internal fun withTestDatabase(test: (databaseUrl: String) -> Unit) {
+private val sharedTestDatabaseUrl: String by lazy {
     loadEnv()
 
     val postgres = TestPostgres.fromEnv()
     val databaseName = "flotti_test_${System.currentTimeMillis()}"
 
     postgres.createDatabase(databaseName)
-    try {
-        postgres.runMigrations(databaseName)
-        test(postgres.jdbcUrl(databaseName))
-    } finally {
-        postgres.dropDatabase(databaseName)
-    }
+    Runtime.getRuntime().addShutdownHook(
+        Thread { postgres.dropDatabase(databaseName) },
+    )
+    postgres.runMigrations(databaseName)
+    postgres.jdbcUrl(databaseName)
+}
+
+internal fun withTestDatabase(test: (databaseUrl: String) -> Unit) {
+    test(sharedTestDatabaseUrl)
 }
 
 internal fun assertDummyMigrationWasApplied(databaseUrl: String) {
